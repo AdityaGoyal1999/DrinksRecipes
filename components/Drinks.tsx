@@ -30,7 +30,7 @@ export default function Drinks({ drinks }) {
             ({ item }) => 
               {
               return (
-                <Pressable onPress={() => navigation.navigate("instructions", {drinkId: item.idDrink})}>
+                <Pressable onPress={() => navigation.navigate("instructions", {drinkId: item.idDrink, imageLink: item.strDrinkThumb})}>
                   <View className="bg-red-100 rounded-md m-2">
                     <Image source={{ uri: item.strDrinkThumb }} style={{ width: wp(40), height: wp(40)}} />
                     <Text style={{ fontSize: hp(1.5), color: '#4B5563', fontWeight: '600', marginLeft: 8 }}>
