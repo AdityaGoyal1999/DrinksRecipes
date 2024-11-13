@@ -3,6 +3,7 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 import React from 'react'
 import MasonryList from '@react-native-seoul/masonry-list'
 import Animated, { FadeInDown } from 'react-native-reanimated';
+import { useNavigation } from 'expo-router';
 
 const sampleData = [
   { idDrink: '1', strDrinkThumb: 'https://via.placeholder.com/150', strDrink: 'Drink 1' },
@@ -10,7 +11,7 @@ const sampleData = [
 ];
 
 export default function Drinks({ drinks }) {
-
+  const navigation = useNavigation();
   return (
 
     <View className="mt-5 flex-1">
@@ -29,12 +30,14 @@ export default function Drinks({ drinks }) {
             ({ item }) => 
               {
               return (
-                <View className="bg-red-100 rounded-md m-2">
-                  <Image source={{ uri: item.strDrinkThumb }} style={{ width: wp(40), height: wp(40)}} />
-                  <Text style={{ fontSize: hp(1.5), color: '#4B5563', fontWeight: '600', marginLeft: 8 }}>
-                    {item.strDrink}
-                  </Text>
-                </View>
+                <Pressable onPress={() => navigation.navigate("instructions", {drinkId: item.idDrink})}>
+                  <View className="bg-red-100 rounded-md m-2">
+                    <Image source={{ uri: item.strDrinkThumb }} style={{ width: wp(40), height: wp(40)}} />
+                    <Text style={{ fontSize: hp(1.5), color: '#4B5563', fontWeight: '600', marginLeft: 8 }}>
+                      {item.strDrink}
+                    </Text>
+                  </View>
+                </Pressable>
               )}
           }
         />)
