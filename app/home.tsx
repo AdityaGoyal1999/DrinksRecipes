@@ -20,6 +20,7 @@ export default function home() {
   }, [])
 
   useEffect(() => {
+    setDrinks([]);
     getDrinks();
   }, [activeCategory])
 
@@ -39,13 +40,12 @@ export default function home() {
   let getDrinks = async () => {
     try {
       let response = await axios.get("https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=" + activeCategory);
-      console.log(response.data)
       if (response && response.data){
         setDrinks(response.data.drinks);
       }
     }
     catch(error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
@@ -54,7 +54,7 @@ export default function home() {
   }
 
   return (
-    <SafeAreaView>
+    <SafeAreaView className="flex-1">
       <View className="justify-between flex-row mx-4">
         <Image source={require("../assets/images/avatar.png")} style={{height: hp(5), width: wp(10)}} />
         <Text>There</Text>
@@ -79,7 +79,7 @@ export default function home() {
         { categories && <Categories categories={categories} activeCategory={activeCategory} handleCategoryChange={handleCategoryChange}/>}
       </View>
 
-      <View>
+      <View className="flex-1">
         { drinks && <Drinks drinks={drinks}/> }
       </View>
     </SafeAreaView>
