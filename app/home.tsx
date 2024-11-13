@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import axios from 'axios';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { MagnifyingGlassIcon } from 'react-native-heroicons/outline'
+
 import Categories from '@/components/Categories';
 import Drinks from '@/components/Drinks';
 
@@ -19,7 +20,8 @@ export default function home() {
   }, [])
 
   useEffect(() => {
-  }, [categories])
+    getDrinks();
+  }, [activeCategory])
 
   let getCategories = async () => {
     try{
@@ -36,7 +38,8 @@ export default function home() {
 
   let getDrinks = async () => {
     try {
-      let response = await axios.get("https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Cocktail");
+      let response = await axios.get("https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=" + activeCategory);
+      console.log(response.data)
       if (response && response.data){
         setDrinks(response.data.drinks);
       }
@@ -44,6 +47,10 @@ export default function home() {
     catch(error) {
       console.log(error);
     }
+  }
+
+  let handleCategoryChange = (newCategory) => {
+    setActiveCategory(newCategory);
   }
 
   return (
@@ -69,7 +76,7 @@ export default function home() {
       </View>
 
       <View>
-        { categories && <Categories categories={categories}/>}
+        { categories && <Categories categories={categories} activeCategory={activeCategory} handleCategoryChange={handleCategoryChange}/>}
       </View>
 
       <View>
