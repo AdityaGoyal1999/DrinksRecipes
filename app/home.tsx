@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, TextInput, Pressable } from 'react-native'
+import { StyleSheet, Text, View, TextInput } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import axios from 'axios';
@@ -57,16 +57,9 @@ export default function home() {
 
   return (
     <SafeAreaView className="flex-1">
-      <View className="justify-between flex-row mx-4">
-        <Pressable onPress={() => navigation.navigate("profile")}>
-          <Image source={require("../assets/images/avatar.png")} style={{height: hp(5), width: wp(10)}} />
-        </Pressable>
-        <Text>There</Text>
-      </View>
 
       <View className="m-4">
         <Text className="text-[35px] font-bold">Search <Text className="text-blue-500">cocktails</Text></Text>
-        <Text className="text-[35px] font-bold">For Any Occasion</Text>
       </View>
 
       <View className="bg-slate-300 rounded-full mx-4 p-2 flex-row justify-between">

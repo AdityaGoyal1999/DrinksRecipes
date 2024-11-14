@@ -60,14 +60,4 @@ export default function Drinks({ drinks }) {
   )
 }
 
-const DrinkCard = ({ drink, index }) => {
-  return (
-    // <View style={{ marginBottom: 16, alignItems: 'center' }}>
-    //   <Image source={{ uri: drink.strDrinkThumb }} style={{ width: wp(40), height: wp(40)}} />
-       <Text style={{fontSize: hp(1.5)}} className="font-semibold ml-2 text-neutral-600">{drink.strDrink}</Text>
-    // </View>
-  )
-}
-
-
 const styles = StyleSheet.create({})

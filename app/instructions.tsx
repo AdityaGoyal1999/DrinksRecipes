@@ -27,8 +27,7 @@ export default function instructions() {
     let key = "strIngredient";
     let keyCtr = 1;
     let counter = key + keyCtr;
-    
-    // console.log(instructions[counter])
+  
     while (instructions[counter] !== undefined && instructions[counter] !== null){
         ings.push(instructions[counter]);
         keyCtr += 1;
