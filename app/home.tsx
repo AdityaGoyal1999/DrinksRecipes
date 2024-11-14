@@ -1,9 +1,10 @@
-import { StyleSheet, Text, View, Image, TextInput } from 'react-native'
+import { StyleSheet, Text, View, Image, TextInput, Pressable } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import axios from 'axios';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { MagnifyingGlassIcon } from 'react-native-heroicons/outline'
+import { useNavigation } from 'expo-router';
 
 import Categories from '@/components/Categories';
 import Drinks from '@/components/Drinks';
@@ -13,6 +14,7 @@ export default function home() {
   const [activeCategory, setActiveCategory] = useState("Cocktail");
   const [categories, setCategories] = useState([]);
   const [drinks, setDrinks] = useState([]);
+  const navigation = useNavigation();
 
   useEffect(() => {
     getCategories();
@@ -56,7 +58,9 @@ export default function home() {
   return (
     <SafeAreaView className="flex-1">
       <View className="justify-between flex-row mx-4">
-        <Image source={require("../assets/images/avatar.png")} style={{height: hp(5), width: wp(10)}} />
+        <Pressable onPress={() => navigation.navigate("profile")}>
+          <Image source={require("../assets/images/avatar.png")} style={{height: hp(5), width: wp(10)}} />
+        </Pressable>
         <Text>There</Text>
       </View>
 

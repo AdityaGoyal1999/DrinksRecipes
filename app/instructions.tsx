@@ -1,4 +1,4 @@
-import { StyleSheet, Text, SafeAreaView, View, Image, FlatList, ScrollView } from 'react-native'
+import { StyleSheet, Text, SafeAreaView, View, Image, FlatList, ScrollView, ActivityIndicator } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useLocalSearchParams } from "expo-router";
 import axios from 'axios';
@@ -74,41 +74,66 @@ export default function instructions() {
 
   
   return (
-    <View>
+    <View className="flex-1">
         <Image source={{uri: imageLink}} className="w-full h-[300px] rounded-3xl" />
-        <View className="mx-4 mt-4">
-            <Text className="text-3xl font-bold">{ instructions.strDrink }</Text>
-            <View className="flex flex-row flex-wrap gap-3">
-                <View className="p-2 bg-blue-100 flex-wrap rounded-lg">
-                    <Text className="">{ instructions.strCategory }</Text>
-                </View>
-
-                <View className="p-2 bg-orange-100 flex-wrap rounded-lg">
-                    <Text className="">{ instructions.strAlcoholic }</Text>
-                </View>
+        <View className="flex-1"> 
+        {
+          !instructions || !instructions.length === 0 ? (
+            <View className="flex-1 items-center justify-center">
+              <ActivityIndicator size="large" />
             </View>
-            <FlatList 
-                className="my-5"
-                data={ingredients}
-                renderItem={({item, index}) => 
-                    <View className="flex flex-row mt-2">
-                        <Entypo name="drink" size={20} />
-                        <Text>
-                            {item} - {measurements[index]}
-                        </Text>
-                    </View>
-            }
-            />
-            <View>
-              {
-                steps.map((step) => (
-                  <View className="flex flex-row">
-                    <Entypo name="dot-single" size={20} />
-                    <Text>{ step.trim() }</Text>
+          ) : (
+          <View className="mx-4 mt-4">
+              <Text className="text-3xl font-bold">{ instructions.strDrink }</Text>
+              <View className="flex flex-row flex-wrap gap-3">
+                  <View className="p-2 bg-blue-100 flex-wrap rounded-lg">
+                      <Text className="">{ instructions.strCategory }</Text>
                   </View>
-                ))
+
+                  <View className="p-2 bg-orange-100 flex-wrap rounded-lg">
+                      <Text className="">{ instructions.strAlcoholic }</Text>
+                  </View>
+              </View>
+
+              <Text className="text-[25px] font-bold mt-5">Ingredients</Text>
+              <View>
+              <FlatList 
+                  className="my-5"
+                  data={ingredients}
+                  numColumns={2}
+                  
+                  contentContainerStyle={{
+                    paddingHorizontal: wp(4),
+                    alignItems: 'center', // Center items horizontally
+                  }}
+                  renderItem={({item, index}) => 
+                    <View className="flex items-center bg-gray-200 rounded-xl" style={{ width: wp(44), margin: wp(2),}}>
+                      <View className="flex flex-row my-2 flex-1 items-center">
+                          <Entypo name="drink" size={30} />
+                          <View className="ml-2">
+                            <Text>{item}</Text>
+                            <Text className="text-blue-600">{ measurements[index] }</Text>
+                          </View>
+                      </View>
+                      <Image source={{uri: "https://www.thecocktaildb.com/images/ingredients/"+item+".png"}} className="w-1/4 h-[100px] rounded-3xl" />
+                    </View>
               }
-            </View>
+              />
+              </View>
+
+              <Text className="text-[25px] font-bold mt-5">Instructions</Text>
+              <View>
+                {
+                  steps.map((step) => (
+                    <View className="flex flex-row">
+                      <Entypo name="dot-single" size={20} />
+                      <Text>{ step.trim() }</Text>
+                    </View>
+                  ))
+                }
+              </View>
+          </View>)
+        }
         </View>
     </View>
   )
