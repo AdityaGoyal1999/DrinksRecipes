@@ -5,10 +5,6 @@ import MasonryList from '@react-native-seoul/masonry-list'
 import Animated, { FadeInDown } from 'react-native-reanimated';
 import { useNavigation } from 'expo-router';
 
-const sampleData = [
-  { idDrink: '1', strDrinkThumb: 'https://via.placeholder.com/150', strDrink: 'Drink 1' },
-  { idDrink: '2', strDrinkThumb: 'https://via.placeholder.com/150', strDrink: 'Drink 2' },
-];
 
 export default function Drinks({ drinks }) {
   const navigation = useNavigation();
@@ -26,21 +22,36 @@ export default function Drinks({ drinks }) {
           keyExtractor={(item) => item.idDrink}
           numColumns={2}
           data={drinks}
+          contentContainerStyle={{
+            paddingHorizontal: wp(4),
+            alignItems: 'center', // Center items horizontally
+          }}
+          showsVerticalScrollIndicator={false}
           renderItem={
             ({ item }) => 
               {
               return (
-                <Pressable onPress={() => navigation.navigate("instructions", {drinkId: item.idDrink, imageLink: item.strDrinkThumb})}>
-                  <View className="bg-red-100 rounded-md m-2">
-                    <Image source={{ uri: item.strDrinkThumb }} style={{ width: wp(40), height: wp(40)}} />
-                    <Text style={{ fontSize: hp(1.5), color: '#4B5563', fontWeight: '600', marginLeft: 8 }}>
-                      {item.strDrink}
+                <Pressable 
+                  onPress={() => navigation.navigate("instructions", {drinkId: item.idDrink, imageLink: item.strDrinkThumb})}
+                  className="flex items-center"
+                  style={{
+                    width: wp(44),
+                    margin: wp(2),
+                  }}
+                >
+                  <View className="bg-gray-200 rounded-2xl overflow-hidden p-2">
+                    <Image source={{ uri: item.strDrinkThumb }} style={{ width: wp(40), height: wp(40)}} className="rounded-md" />
+                    <Text style={{ fontSize: hp(1.5), color: '#4B5563', fontWeight: '600', marginLeft: 8 }} className="mt-2">
+                      {
+                        item.strDrink.length > 23 ? item.strDrink.slice(0, 20) + "..." : item.strDrink
+                      }
                     </Text>
                   </View>
                 </Pressable>
               )}
           }
-        />)
+        />
+        )
       }
     
 
